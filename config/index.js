@@ -27,8 +27,20 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-    // CSS Sourcemaps off by default because relative paths are "buggy"
+	  // vue-cli 脚手架使用的是 http-proxy-middleware 中间件来作为代理的转发服务的
+	  // 如何配置需要参考 http-proxy-middleware 文档
+	  // // 当请求是以 /api 开头的时候代理转发到 http://api.botue.com
+	  // 例如当前请求是 /api/login 则代理转发地址为 http://api.botue.com/api/login
+    proxyTable: {
+        '/api': {
+            target: 'http://api.botue.com',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api': ''
+            }
+        }
+    },
+	  // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
